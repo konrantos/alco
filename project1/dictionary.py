@@ -29,7 +29,7 @@ for _ in range(1_000_000):
     if random_number not in card_charges:
         card_charges[random_number] = [random_amount, 1]
     else:
-        # Ενώ, αν προυοπάρχει ο αριθμός κάρτας στό λεξικό προσθέτεται το ποσό χρέωσης στο ήδη υπάρχον ποσό και αυξάνεται κατά 1 το πλήθος των συναλλαγών.
+        # Ενώ, αν προϋπάρχει ο αριθμός κάρτας στό λεξικό προσθέτεται το ποσό χρέωσης στο ήδη υπάρχον ποσό και αυξάνεται κατά 1 το πλήθος των συναλλαγών.
         card_charges[random_number][0] += random_amount
         card_charges[random_number][1] += 1
 
