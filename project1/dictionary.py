@@ -71,9 +71,18 @@ class Linear_Probing_Hash_Table:
         self.load_factor = 0
         
         
-    # Συνάρτηση κατακερματισμού με χρήση mod.
+    # Συνάρτηση κατακερματισμού με χρήση της Jenkins hash function.
     def hash_function(self, key):
-        return key % self.size
+        hash_value = 0
+        key_str = str(key)
+        for char in key_str:
+            hash_value += ord(char)
+            hash_value += (hash_value << 10)
+            hash_value ^= (hash_value >> 6)
+        hash_value += (hash_value << 3)
+        hash_value ^= (hash_value >> 11)
+        hash_value += (hash_value << 15)
+        return hash_value % self.size
         
         
     # Συνάρτηση εισγωγής ενός ζευγαριού (key, value) στον πίνακα κατακερματισμού.
@@ -139,15 +148,21 @@ class Linear_Probing_Hash_Table:
                 # Unpacking του tuple item σε δύο μεταβλητές, key και value.
                 key, value = item 
                 # Υπολογισμός νέου δείκτη (index) για το νέο μέγεθος.
-                index = self.hash_function(key)
+                index = self.hash_function(key, new_size)
                 # Εύρεση νέας κενής θέσης με γραμμική διερεύνηση.
                 while new_table[index] is not None:
                     index = (index + 1) % new_size
                 # Το στοιχείο τοποθετείται στην εντοπισμένη κενή θέση του νέου πίνακα, βάζοντας το tuple (key, value).
                 new_table[index] = (key, value)
-        # Ενημέρωση του μεγέθους και του πίνακα κατακερματισμού.
+        # Ενημέρωση του μεγέθους και του πίνακα κατακερματισμού και του load factor.
         self.size = new_size
+        self.table = new_table
+        self.load_factor = (self.load_factor * self.size) / new_size
 
+
+    # Συνάρτηση για την επιστροφή του μεγέθους του πίνακα.
+    def show_size(self):
+        return self.size
 
     # Συνάρτηση ελέγχου για το αν ένας αριθμός είναι πρώτος.
     def is_prime(self, n):
