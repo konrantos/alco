@@ -54,7 +54,6 @@ print(f"Η κάρτα με το μεγαλύτερο πλήθος συναλλα
 # Εμφάνιση συνολικού χρόνου λειτουργιών.
 print(f"Ο συνολικός χρόνος εκτέλεσης είναι {elapsed_time:.2f} δευτερόλεπτα.")
 
-
 # Kλάση για την υλοποίηση ενός πίνακα κατακερματισμού με γραμμική διερεύνηση.
 class Linear_Probing_Hash_Table:
     
@@ -105,7 +104,6 @@ class Linear_Probing_Hash_Table:
         self.load_factor += 1 / self.size
         
         
-        
     
     # Συνάρτηση αφαίρεσης ενός κλειδιού από τον πίνακα κατακερματισμού.
     def remove(self, key):
@@ -130,7 +128,7 @@ class Linear_Probing_Hash_Table:
             return False  
     
     
-
+    
     # Συνάρτηση αναζήτησης ενός κλειδού απο τον πίνακα κατακερματισμού.
     def get(self, key):
         index = self.hash_function(key)
@@ -174,6 +172,8 @@ class Linear_Probing_Hash_Table:
         new_size = self.next_prime(self.size * 2)
         # Ο νέος πίνακας κατακερματισμού αρχικοποιείται με κενές θέσεις.
         new_table = [None] * new_size
+        # Αρχικοποίηση μετρητής πραγματικών στοιχείων.
+        count = 0 
         # Επανατοποθέτηση υπαρχόντων στοιχείων στο νέο μέγεθος πίνακα για κάθε ζεύγος item που δεν έχει τιμή 'Νονε'.
         for item in self.table:
             if item is not None:
