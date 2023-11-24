@@ -88,9 +88,6 @@ class Linear_Probing_Hash_Table:
         
     # Συνάρτηση εισγωγής ενός ζευγαριού (key, value) στον πίνακα κατακερματισμού.
     def put(self, key, value):
-        # Έλεγχος για αναγκαίο rehash του πίνακα κατακερματισμού, αν το load factor >= 70%.
-        if self.load_factor >= 0.7:
-            self.rehash()
         # Υπολογισμός του δείκτη (index) όπου θα αποθηκευτεί ένα κλειδί (key) στον πίνακα κατακερματισμού.
         index = self.hash_function(key)
         # Γραμμική διερεύνηση για εύρεση κενής θέσης.
@@ -102,6 +99,9 @@ class Linear_Probing_Hash_Table:
         self.table[index] = (key, value)
         # Ενημέρωση του συντελεστή φόρτωσης.
         self.load_factor += 1 / self.size
+        # Έλεγχος για αναγκαίο rehash του πίνακα κατακερματισμού, αν το load factor >= 70%.
+        if self.load_factor >= 0.7:
+            self.rehash()
         
         
     
