@@ -55,9 +55,9 @@ print(f"Η κάρτα με το μεγαλύτερο πλήθος συναλλα
 print(f"Ο συνολικός χρόνος εκτέλεσης είναι {elapsed_time:.2f} δευτερόλεπτα.")
 
 
-
 # Kλάση για την υλοποίηση ενός πίνακα κατακερματισμού με γραμμική διερεύνηση.
 class Linear_Probing_Hash_Table:
+    
     
     
     # Συνάρτηση αρχικοποίησης του πίνακα κατακερματισμού.
@@ -69,6 +69,7 @@ class Linear_Probing_Hash_Table:
         self.table = [None] * size
         # Αρχικό load fαctor = 0%.
         self.load_factor = 0
+        
         
         
     # Συνάρτηση κατακερματισμού με χρήση της Jenkins hash function.
@@ -83,6 +84,7 @@ class Linear_Probing_Hash_Table:
         hash_value ^= (hash_value >> 11)
         hash_value += (hash_value << 15)
         return hash_value % self.size
+        
         
         
     # Συνάρτηση εισγωγής ενός ζευγαριού (key, value) στον πίνακα κατακερματισμού.
@@ -100,7 +102,8 @@ class Linear_Probing_Hash_Table:
         # Εισαγωγή ενός στοιχείου στον πίνακα.
         self.table[index] = (key, value)
         # Ενημέρωση του συντελεστή φόρτωσης.
-        self.load_factor = (self.load_factor * 2 + 1) / self.size
+        self.load_factor += 1 / self.size
+
 
 
     # Συνάρτηση αναζήτησης ενός κλειδού απο τον πίνακα κατακερματισμού.
@@ -117,53 +120,9 @@ class Linear_Probing_Hash_Table:
             index = (index + 1) % self.size
         # Επιστροφή 'None' αν δε βρεθεί το κλειδί.
         return None
-
-
-    # Συνάρτηση αφαίρεσης ενός κλειδιού από τον πίνακα κατακερματισμού.
-    def remove(self, key):
-        index = self.hash_function(key)
-         # Η while εκτελείται όσο η θέση του πίνακα έχει κάποιο στοιχείο σε αυτή την θέση.
-        while self.table[index] is not None:
-            # Έλεγχος για αν το κλειδί βρίσκεται στην τρέχουσα θέση.
-            if self.table[index][0] == key:
-                # Αν ναι, γίνεται αφαίρεση του ζευγαριού κλειδί-τιμής θέτοντας το περιεχόμενο σε None.
-                self.table[index] = None
-                return
-            # Μετακίνηση στην επόμενη θέση χρησιμοποιώντας γραμμική διερεύνηση.
-            index = (index + 1) % self.size
             
             
-    # Συνάρτηση αύξησης του μεγέθους του πίνακα κατακερματισμού στον επόμενο τουλάχιστον διπλάσιο πρώτο αριθμό.
-    def rehash(self):
-        # Αρχικά, διπλασιάζουμε το μέγεθος του πίνακα κατακερματισμού.
-        new_size = self.size * 2
-        # Εύρεση του επόμενου πρώτου αριθμού που είναι διπλάσιος του new_size.
-        while not self.is_prime(new_size):
-            new_size += 1
-        # Ο νέος πίνακας κατακερματισμού αρχικοποιείται με κενές θέσεις.
-        new_table = [None] * new_size
-        # Επανατοποθέτηση υπαρχόντων στοιχείων στο νέο μέγεθος πίνακα για κάθε ζεύγος item που δεν έχει τιμή 'Νονε'.
-        for item in self.table:
-            if item is not None:
-                # Unpacking του tuple item σε δύο μεταβλητές, key και value.
-                key, value = item 
-                # Υπολογισμός νέου δείκτη (index) για το νέο μέγεθος.
-                index = self.hash_function(key, new_size)
-                # Εύρεση νέας κενής θέσης με γραμμική διερεύνηση.
-                while new_table[index] is not None:
-                    index = (index + 1) % new_size
-                # Το στοιχείο τοποθετείται στην εντοπισμένη κενή θέση του νέου πίνακα, βάζοντας το tuple (key, value).
-                new_table[index] = (key, value)
-        # Ενημέρωση του μεγέθους και του πίνακα κατακερματισμού και του load factor.
-        self.size = new_size
-        self.table = new_table
-        self.load_factor = (self.load_factor * self.size) / new_size
-
-
-    # Συνάρτηση για την επιστροφή του μεγέθους του πίνακα.
-    def show_size(self):
-        return self.size
-
+            
     # Συνάρτηση ελέγχου για το αν ένας αριθμός είναι πρώτος.
     def is_prime(self, n):
         if n <= 1:
@@ -172,3 +131,38 @@ class Linear_Probing_Hash_Table:
             if n % i == 0:
                 return False
         return True
+        
+      
+      
+    # Συνάρτηση για την εύρεση επόμενου πρώτου αριθμού μεγαλύτερου ή ίσου με το n.
+    def next_prime(self, n):
+        n += 1
+        while not self.is_prime(n):
+            n += 1
+        return n
+          
+       
+        
+    # Συνάρτηση αύξησης του μεγέθους του πίνακα κατακερματισμού στον επόμενο τουλάχιστον διπλάσιο πρώτο αριθμό.
+    def rehash(self):
+        # Αύξηση του μεγέθους του πίνακα κατακερματισμού.
+        new_size = self.next_prime(self.size * 2)
+        # Ο νέος πίνακας κατακερματισμού αρχικοποιείται με κενές θέσεις.
+        new_table = [None] * new_size
+        # Επανατοποθέτηση υπαρχόντων στοιχείων στο νέο μέγεθος πίνακα για κάθε ζεύγος item που δεν έχει τιμή 'Νονε'.
+        for item in self.table:
+            if item is not None:
+                # Unpacking του tuple item σε δύο μεταβλητές, key και value.
+                key, value = item 
+                # Υπολογισμός νέου δείκτη (index) για το νέο μέγεθος.
+                index = self.hash_function(key)
+                # Εύρεση νέας κενής θέσης με γραμμική διερεύνηση.
+                while new_table[index] is not None:
+                    index = (index + 1) % new_size
+                # Το στοιχείο τοποθετείται στην εντοπισμένη κενή θέση του νέου πίνακα, βάζοντας το tuple (key, value).
+                new_table[index] = (key, value)
+        # Ενημέρωση του μεγέθους και του πίνακα κατακερματισμού και του load factor.
+        self.size = new_size
+        self.table = new_table
+
+
