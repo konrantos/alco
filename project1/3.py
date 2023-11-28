@@ -48,9 +48,7 @@ class Linear_Probing_Hash_Table:
             self.rehash()
         
 
-    
-    
-    
+
     # Συνάρτηση αναζήτησης ενός κλειδού απο τον πίνακα κατακερματισμού.
     def get(self, key):
         index = self.hash_function(key)
