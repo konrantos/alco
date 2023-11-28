@@ -47,29 +47,7 @@ class Linear_Probing_Hash_Table:
         if self.load_factor >= 0.7:
             self.rehash()
         
-        
-    
-    # Συνάρτηση αφαίρεσης ενός κλειδιού από τον πίνακα κατακερματισμού.
-    def remove(self, key):
-        index = self.hash_function(key)
-        # Η while εκτελείται όσο η θέση του πίνακα έχει κάποιο στοιχείο σε αυτή τη θέση.
-        while self.table[index] is not None:
-            # Έλεγχος για αν το κλειδί βρίσκεται στην τρέχουσα θέση.
-            if self.table[index][0] == key:
-                # Αν ναι, γίνεται αφαίρεση του ζευγαριού κλειδί-τιμής θέτοντας το περιεχόμενο σε None.
-                self.table[index] = None
-                # Ενημέρωση του συντελεστή φόρτωσης μετά την αφαίρεση.
-                self.load_factor -= 1 / self.size
-                # Επιστροφή True για επιτυχία.
-                return True  
-            # Έλεγχος αν η επόμενη θέση είναι κενή προτού μετακινηθούμε σε αυτήν.
-            if self.table[index] is None:
-            # Επιστροφή False αν το κλειδί δε βρέθηκε.
-                return False 
-            # Μετακίνηση στην επόμενη θέση χρησιμοποιώντας γραμμική διερεύνηση.
-            index = (index + 1) % self.size
-        # Επιστροφή False αν το κλειδί δε βρέθηκε.
-        return False  
+
     
     
     
