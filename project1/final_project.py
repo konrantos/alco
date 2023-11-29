@@ -12,7 +12,7 @@ numbers = []
 card_charges = {}
 
 # Δημιουργία 20000 τυχαίων αριθμών πιστωτικών καρτών.
-for _ in range(20000):
+for _ in range(20_000):
     # Δημιουργία τυχαίων 16 ψήφιων αριθμών.
     random_number = random.randint(0000000000000000, 9999999999999999)
     # Προσθήκη των τυχαίων αριθμών στην λίστα numbers.
@@ -46,6 +46,7 @@ max_transaction_count_card = max(card_charges, key=lambda card: card_charges[car
 elapsed_time = time.time() - start
 
 # Εμφάνιση των αποτελεσμάτων μαζί με τα ποσά πληρωμών και το πλήθος συναλλαγών.
+print("Αποτελέσματα χρησιμοποιώντας dictionary:")
 print(f"Η κάρτα με το μικρότερο συνολικό ποσό πληρωμών είναι η {min_total_payment_card} με ποσό {card_charges[min_total_payment_card][0]} ευρώ.")
 print(f"Η κάρτα με το μεγαλύτερο συνολικό ποσό πληρωμών είναι η {max_total_payment_card} με ποσό {card_charges[max_total_payment_card][0]} ευρώ.")
 print(f"Η κάρτα με το μικρότερο πλήθος συναλλαγών είναι η {min_transaction_count_card} με {card_charges[min_transaction_count_card][1]} χρεώσεις.")
@@ -192,20 +193,22 @@ for _ in range(1_000_000):
         card_info[0] += random_amount
          # Αυξάνουμε το πλήθος των συναλλαγών κατά 1.
         card_info[1] += 1
-        # Ενημέρωση του πίνακα κατακερματισμού με τα νέα στοιχεία της κάρτας, βάζοντας την ενημερωμένη λίστα στη θέση της προηγούμενης.
-        hash_table.put(random_number, card_info)
+
 
 # Υπολογισμός και εκτύπωση των αποτελεσμάτων και του αντίστοιχου χρόνου χρησιμοποιώντας τον πίνακα κατακερματισμού.
 start = time.time()
 
-min_total_payment_card_table = min(hash_table.table, key=lambda item: item[1][0])
-max_total_payment_card_table = max(hash_table.table, key=lambda item: item[1][0])
-min_transaction_count_card_table = min(hash_table.table, key=lambda item: item[1][1])
-max_transaction_count_card_table = max(hash_table.table, key=lambda item: item[1][1])
+# Φιλτράρισμα του πίνακα κατακερματισμού για τα μη-κενά στοιχεία.
+filtered_table = [item for item in hash_table.table if item is not None]
+
+min_total_payment_card_table = min(filtered_table, key=lambda item: item[1][0])
+max_total_payment_card_table = max(filtered_table, key=lambda item: item[1][0])
+min_transaction_count_card_table = min(filtered_table, key=lambda item: item[1][1])
+max_transaction_count_card_table = max(filtered_table, key=lambda item: item[1][1])
 
 elapsed_time = time.time() - start
 
-print("\nΑποτελέσματα χρησιμοποιώντας τον Πίνακα Κατακερματισμού:")
+print("\nΑποτελέσματα χρησιμοποιώντας τον πίνακα κατακερματισμού:")
 print(f"Κάρτα με το μικρότερο συνολικό ποσό πληρωμών: {min_total_payment_card_table[0]} με ποσό {min_total_payment_card_table[1][0]} ευρώ.")
 print(f"Κάρτα με το μεγαλύτερο συνολικό ποσό πληρωμών: {max_total_payment_card_table[0]} με ποσό {max_total_payment_card_table[1][0]} ευρώ.")
 print(f"Κάρτα με το μικρότερο πλήθος συναλλαγών: {min_transaction_count_card_table[0]} με {min_transaction_count_card_table[1][1]} χρεώσεις.")
