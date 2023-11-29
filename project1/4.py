@@ -1,12 +1,13 @@
 #Δημιουργία αντικειμένου της κλάσης Linear_Probing_Hash_Table.
 hash_table = Linear_Probing_Hash_Table()
-
+Ν=10_000
 # Εκτέλεση των ίδιων λειτουργιών όπως και με το λεξικό αλλά με χρήση του πίνακα κατακερματισμού.
+
 for _ in range(20_000):
     random_number = random.randint(0000000000000000, 9999999999999999)
     numbers.append(random_number)
 
-for _ in range(1_000): # Κανονικά for _ in range(1_000_000):
+for _ in range(Ν): 
     random_number = random.choice(numbers)
     random_amount = random.randint(10, 1000)
     
@@ -33,7 +34,7 @@ max_transaction_count_card_table = max(hash_table.table, key=lambda item: item[1
 
 elapsed_time_table = time.time() - start
 
-print("\nΑποτελέσματα χρησιμοποιώντας τον πίνακα κατακερματισμού:")
+print(f"\nΑποτελέσματα χρησιμοποιώντας τον πίνακα κατακερματισμού για {Ν} επαναλήψεις:")
 print(f"Η κάρτα με το μικρότερο συνολικό ποσό πληρωμών είναι η {min_total_payment_card_table[0]} με ποσό {min_total_payment_card_table[1][0]} ευρώ.")
 print(f"Η κάρτα με το μεγαλύτερο συνολικό ποσό πληρωμών είναι η {max_total_payment_card_table[0]} με ποσό {max_total_payment_card_table[1][0]} ευρώ.")
 print(f"Η κάρτα με το μικρότερο πλήθος συναλλαγών είναι η {min_transaction_count_card_table[0]} με {min_transaction_count_card_table[1][1]} χρεώσεις.")
