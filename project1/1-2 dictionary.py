@@ -46,6 +46,7 @@ max_transaction_count_card = max(card_charges, key=lambda card: card_charges[car
 elapsed_time = time.time() - start
 
 # Εμφάνιση των αποτελεσμάτων μαζί με τα ποσά πληρωμών και το πλήθος συναλλαγών.
+print("Αποτελέσματα χρησιμοποιώντας dictionary:")
 print(f"Η κάρτα με το μικρότερο συνολικό ποσό πληρωμών είναι η {min_total_payment_card} με ποσό {card_charges[min_total_payment_card][0]} ευρώ.")
 print(f"Η κάρτα με το μεγαλύτερο συνολικό ποσό πληρωμών είναι η {max_total_payment_card} με ποσό {card_charges[max_total_payment_card][0]} ευρώ.")
 print(f"Η κάρτα με το μικρότερο πλήθος συναλλαγών είναι η {min_transaction_count_card} με {card_charges[min_transaction_count_card][1]} χρεώσεις.")
