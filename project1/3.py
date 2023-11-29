@@ -112,3 +112,33 @@ class Linear_Probing_Hash_Table:
         self.size = new_size
         self.table = new_table
         self.load_factor = count / new_size
+        
+
+# Χρήση απλού unittest για έλεγχο της κλάσης.   
+import unittest
+
+class TestLinearProbingHashTable(unittest.TestCase):
+    def test_put_and_get(self):
+        hash_table = Linear_Probing_Hash_Table(size=5)
+        
+        hash_table.put(1, 10)
+        hash_table.put(2, 20)
+        
+        print("Πίνακας κατακερματισμού πριν το rehash:")
+        print(hash_table.table)
+        
+    def test_rehash(self):
+        hash_table = Linear_Probing_Hash_Table(size=5)
+
+        hash_table.put(1, 10)
+        hash_table.put(2, 20)
+        hash_table.put(3, 30)
+        hash_table.put(4, 40)
+        
+        print("Πίνακας κατακερματισμού μετά το rehash:")
+        print(hash_table.table)
+
+        self.assertEqual(hash_table.size, 11)
+
+if __name__ == '__main__':
+    unittest.main()
