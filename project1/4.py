@@ -2,7 +2,7 @@
 hash_table = Linear_Probing_Hash_Table()
 
 # Εκτέλεση των ίδιων λειτουργιών όπως και με το λεξικό αλλά με χρήση του πίνακα κατακερματισμού.
-for _ in range(1_000_000):
+for _ in range(10000):
     random_number = random.choice(numbers)
     random_amount = random.randint(10, 1000)
     
@@ -22,14 +22,17 @@ for _ in range(1_000_000):
 # Υπολογισμός και εκτύπωση των αποτελεσμάτων και του αντίστοιχου χρόνου χρησιμοποιώντας τον πίνακα κατακερματισμού.
 start = time.time()
 
-min_total_payment_card_table = min(hash_table.table, key=lambda item: item[1][0])
-max_total_payment_card_table = max(hash_table.table, key=lambda item: item[1][0])
-min_transaction_count_card_table = min(hash_table.table, key=lambda item: item[1][1])
-max_transaction_count_card_table = max(hash_table.table, key=lambda item: item[1][1])
+# Φιλτράρισμα του πίνακα κατακερματισμού για τα μη-κενά στοιχεία.
+filtered_table = [item for item in hash_table.table if item is not None]
+
+min_total_payment_card_table = min(filtered_table, key=lambda item: item[1][0])
+max_total_payment_card_table = max(filtered_table, key=lambda item: item[1][0])
+min_transaction_count_card_table = min(filtered_table, key=lambda item: item[1][1])
+max_transaction_count_card_table = max(filtered_table, key=lambda item: item[1][1])
 
 elapsed_time = time.time() - start
 
-print("\nΑποτελέσματα χρησιμοποιώντας τον Πίνακα Κατακερματισμού:")
+print("\nΑποτελέσματα χρησιμοποιώντας τον πίνακα κατακερματισμού:")
 print(f"Κάρτα με το μικρότερο συνολικό ποσό πληρωμών: {min_total_payment_card_table[0]} με ποσό {min_total_payment_card_table[1][0]} ευρώ.")
 print(f"Κάρτα με το μεγαλύτερο συνολικό ποσό πληρωμών: {max_total_payment_card_table[0]} με ποσό {max_total_payment_card_table[1][0]} ευρώ.")
 print(f"Κάρτα με το μικρότερο πλήθος συναλλαγών: {min_transaction_count_card_table[0]} με {min_transaction_count_card_table[1][1]} χρεώσεις.")
