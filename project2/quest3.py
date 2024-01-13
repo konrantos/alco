@@ -50,7 +50,7 @@ for file_path in file_paths:
     }
 
 # Εκτύπωση των δεδομένων από ένα συγκεκριμένο αρχείο για παράδειγμα.
-print(data[r'D:\1-Dit Uoi\5ο\ΑΛΓΟΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΟΤΗΤΑ\project2\la01.txt']),
+# print(data[r'D:\1-Dit Uoi\5ο\ΑΛΓΟΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΟΤΗΤΑ\project2\la01.txt']),
 
 
 def calculate_makespan_spt(num_jobs, num_machines, job_times, job_sequences):
