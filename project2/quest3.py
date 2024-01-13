@@ -56,20 +56,16 @@ for file_path in file_paths:
 def calculate_makespan_spt(num_jobs, num_machines, job_times, job_sequences):
     # Δημιουργία λίστας για την καταγραφή του τρέχοντος χρόνου για κάθε μηχάνημα.
     machine_schedule = [0] * num_machines
-
     # Δημιουργία λίστας για την καταγραφή του χρόνου ολοκλήρωσης για κάθε εργασία.
     job_completion = [0] * num_jobs
-
     # Κατάταξη των εργασιών με βάση τον συνολικό ελάχιστο χρόνο επεξεργασίας όπως αναφέρει ο SPT.
     sorted_jobs = sorted(range(num_jobs), key=lambda x: sum(job_times[x]))
-
     for job in sorted_jobs:
         for step in range(num_machines):
             machine = job_sequences[job][step] - 1
             time = job_times[job][step]
             machine_schedule[machine] = max(machine_schedule[machine], job_completion[job]) + time
             job_completion[job] = machine_schedule[machine]
-
     # Επιστροφή του makespan.
     return max(machine_schedule)
 
