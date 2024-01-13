@@ -143,29 +143,12 @@ def plot_gantt_chart_with_jobs(num_machines, num_jobs, start_times, end_times, m
     plt.tight_layout()
     # Εμφάνιση του διαγράμματος στην οθόνη.
     plt.show()
-    
-
-def read_jssp_data(file_path):
-    # Άνοιγμα αρχείου με τη διαδρομή file_path για ανάγνωση.
-    with open(file_path, 'r', encoding='utf-8') as file:
-        # Διάβασμα του αριθμού των εργασιών από την πρώτη γραμμή του αρχείου.
-        num_jobs = int(file.readline().split('#')[0].strip())
-        # Διάβασμα του αριθμού των μηχανημάτων από τη δεύτερη γραμμή του αρχείου.
-        num_machines = int(file.readline().split('#')[0].strip())
-        # Παράλειψη της γραμμής με τον βέλτιστο χρόνο (makespan).
-        file.readline()
-        # Διάβασμα των χρόνων επεξεργασίας για κάθε εργασία.
-        processing_times = [list(map(int, file.readline().split('#')[0].strip().split())) for _ in range(num_jobs)]
-        # Διάβασμα της σειράς επίσκεψης των μηχανημάτων για κάθε εργασία.
-        machine_orders = [list(map(int, file.readline().split('#')[0].strip().split())) for _ in range(num_jobs)]
-    # Επιστροφή του αριθμού των εργασιών, του αριθμού των μηχανημάτων, των χρόνων επεξεργασίας και των σειρών επίσκεψης των μηχανημάτων.
-    return num_jobs, num_machines, processing_times, machine_orders
 
 
 # Ορίζει τη διαδρομή του αρχείου για ανάγνωση των δεδομένων JSSP.
 file_path =  r'D:\1-Dit Uoi\5ο\ΑΛΓΟΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΟΤΗΤΑ\project2\la01.txt'
 # Διαβάζει τα δεδομένα JSSP από το αρχείο και αποθηκεύει τον αριθμό των εργασιών, των μηχανημάτων, τους χρόνους επεξεργασίας και τη σειρά επίσκεψης μηχανημάτων.
-parsed_num_jobs, parsed_num_machines, parsed_processing_times, parsed_machine_orders = read_jssp_data(file_path)
+parsed_num_jobs, parsed_num_machines, optimal_makespan, parsed_processing_times, parsed_machine_orders = read_file(file_path)
 # Υπολογίζει το makespan  χρησιμοποιώντας τον αλγόριθμο SPT.
 makespan_spt_user = calculate_makespan_spt(parsed_num_jobs, parsed_num_machines, parsed_processing_times, parsed_machine_orders)
 # Αρχικοποιεί δύο πίνακες για τους χρόνους έναρξης και λήξης κάθε εργασίας σε κάθε μηχάνημα.
