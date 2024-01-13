@@ -143,6 +143,7 @@ def plot_gantt_chart_with_jobs(num_machines, num_jobs, start_times, end_times, m
     plt.tight_layout()
     # Εμφάνιση του διαγράμματος στην οθόνη.
     plt.show()
+    
 
 def read_jssp_data(file_path):
     # Άνοιγμα αρχείου με τη διαδρομή file_path για ανάγνωση.
@@ -161,12 +162,11 @@ def read_jssp_data(file_path):
     return num_jobs, num_machines, processing_times, machine_orders
 
 
-
 # Ορίζει τη διαδρομή του αρχείου για ανάγνωση των δεδομένων JSSP.
 file_path =  r'D:\1-Dit Uoi\5ο\ΑΛΓΟΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΟΤΗΤΑ\project2\la01.txt'
 # Διαβάζει τα δεδομένα JSSP από το αρχείο και αποθηκεύει τον αριθμό των εργασιών, των μηχανημάτων, τους χρόνους επεξεργασίας και τη σειρά επίσκεψης μηχανημάτων.
 parsed_num_jobs, parsed_num_machines, parsed_processing_times, parsed_machine_orders = read_jssp_data(file_path)
-# Υπολογίζει το makespan (συνολικό χρόνο ολοκλήρωσης) χρησιμοποιώντας τον αλγόριθμο SPT (Shortest Processing Time).
+# Υπολογίζει το makespan  χρησιμοποιώντας τον αλγόριθμο SPT.
 makespan_spt_user = calculate_makespan_spt(parsed_num_jobs, parsed_num_machines, parsed_processing_times, parsed_machine_orders)
 # Αρχικοποιεί δύο πίνακες για τους χρόνους έναρξης και λήξης κάθε εργασίας σε κάθε μηχάνημα.
 start_times = np.zeros((parsed_num_jobs, parsed_num_machines))
