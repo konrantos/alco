@@ -53,7 +53,6 @@ for file_path in file_paths:
 print(data[r'D:\1-Dit Uoi\5ο\ΑΛΓΟΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΟΤΗΤΑ\project2\la01.txt']),
 
 
-
 def calculate_makespan_spt(num_jobs, num_machines, job_times, job_sequences):
     # Αρχικοποίηση των προγραμμάτων των μηχανημάτων.
     # Δημιουργία λίστας για την καταγραφή του τρέχοντος χρόνου για κάθε μηχάνημα.
@@ -82,8 +81,6 @@ def calculate_makespan_spt(num_jobs, num_machines, job_times, job_sequences):
 
     # Επιστροφή του makespan.
     return max(machine_schedule)
-
-
 
 
 # Συνάρτηση για την επεξεργασία κάθε αρχείου.
