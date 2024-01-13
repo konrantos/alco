@@ -20,9 +20,14 @@ def read_file(file_path):
         optimal_makespan = None
         job_data_start_index = 2
 
+    # Υπολογισμός του χρόνου που πρέπει να περάσει από την κάθε μηχανή η κάθε μία από τις εργασίες.
     job_times = [list(map(int, lines[i].split())) for i in range(job_data_start_index, job_data_start_index + num_jobs)]
+  
+    # Υπολογισμός της σειράς επίσκεψης των μηχανών για κάθε μία από τις εργασίες.
     job_sequences = [list(map(int, lines[i].split())) for i in range(job_data_start_index + num_jobs, job_data_start_index + 2 * num_jobs)]
+    # Επιστροφή ενός tuple.
     return num_jobs, num_machines, optimal_makespan, job_times, job_sequences
+
 
 
 # Ορισμός λίστας με τις διαδρομές των αρχείων.
@@ -58,34 +63,19 @@ print(data[r'D:\1-Dit Uoi\5ο\ΑΛΓΟΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΟΤΗ
 
 
 def calculate_makespan_spt(num_jobs, num_machines, job_times, job_sequences):
-    # Αρχικοποίηση των προγραμμάτων των μηχανημάτων
-    # Δημιουργία λίστας για την καταγραφή του τρέχοντος χρόνου για κάθε μηχάνημα
+    # Δημιουργία λίστας για την καταγραφή του τρέχοντος χρόνου για κάθε μηχάνημα.
     machine_schedule = [0] * num_machines
-
-    # Αρχικοποίηση των χρόνων ολοκλήρωσης εργασιών
-    # Δημιουργία λίστας για την καταγραφή του χρόνου ολοκλήρωσης για κάθε εργασία
+    # Δημιουργία λίστας για την καταγραφή του χρόνου ολοκλήρωσης για κάθε εργασία.
     job_completion = [0] * num_jobs
-
-    # Κατάταξη των εργασιών με βάση τον συνολικό ελάχιστο χρόνο επεξεργασίας
-    # Αυτό είναι το βασικό βήμα του αλγορίθμου SPT, όπου προτεραιοποιούνται οι εργασίες με τον συντομότερο συνολικό χρόνο
+    # Κατάταξη των εργασιών με βάση τον συνολικό ελάχιστο χρόνο επεξεργασίας όπως αναφέρει ο SPT.
     sorted_jobs = sorted(range(num_jobs), key=lambda x: sum(job_times[x]))
-
-    # Διαδικασία προγραμματισμού για κάθε εργασία
     for job in sorted_jobs:
-        # Διαδοχική επεξεργασία κάθε βήματος (μηχανήματος) της εργασίας
         for step in range(num_machines):
-            # Εύρεση του αντίστοιχου μηχανήματος για το τρέχον βήμα
             machine = job_sequences[job][step] - 1
-            # Χρόνος επεξεργασίας για το βήμα στο συγκεκριμένο μηχάνημα
             time = job_times[job][step]
-            # Ενημέρωση του προγράμματος του μηχανήματος
-            # Λαμβάνεται υπόψη ο τρέχων χρόνος του μηχανήματος και η ολοκλήρωση της προηγούμενης εργασίας
             machine_schedule[machine] = max(machine_schedule[machine], job_completion[job]) + time
-            # Ενημέρωση του χρόνου ολοκλήρωσης της εργασίας
             job_completion[job] = machine_schedule[machine]
-
-    # Επιστροφή του makespan
-    # Το μέγιστο στοιχείο του προγράμματος των μηχανημάτων αντιπροσωπεύει τον συνολικό χρόνο ολοκλήρωσης όλων των εργασιών
+    # Επιστροφή του makespan.
     return max(machine_schedule)
 
 
@@ -111,7 +101,8 @@ if __name__ == '__main__':
         
         
         
-def plot_gantt_chart_with_jobs(num_machines, num_jobs, start_times, end_times, makespan):
+        
+def plot_gantt_chart(num_machines, num_jobs, start_times, end_times, makespan):
     # Δημιουργία σχήματος και αξόνων για την απεικόνιση του διαγράμματος Gantt.
     fig, ax = plt.subplots(figsize=(12, 6))
     # Καθορισμός χρωμάτων για τις διάφορες εργασίες.
@@ -134,7 +125,7 @@ def plot_gantt_chart_with_jobs(num_machines, num_jobs, start_times, end_times, m
     ax.set_xlabel('Time')
     ax.set_ylabel('Machine')
     ax.set_title(f'SPT Gantt Chart (Makespan: {int(makespan)})')
-    # Δημιουργία προσαρμοσμένης λεζάντας για τις εργασίες.
+    # Δημιουργία λεζάντας για τις εργασίες.
     custom_lines = [plt.Line2D([0], [0], color=colors[job % len(colors)], lw=4) for job in range(num_jobs)]
     # Προσθήκη λεζάντας στο διάγραμμα με αναφορά στις εργασίες και τα αντίστοιχα χρώματα τους.
     ax.legend(custom_lines, [f'Job {j+1}' for j in range(num_jobs)], loc='upper center', bbox_to_anchor=(0.5, -0.05), shadow=True, ncol=num_jobs)
@@ -144,40 +135,31 @@ def plot_gantt_chart_with_jobs(num_machines, num_jobs, start_times, end_times, m
     plt.show()
 
 
-
-
-
-# Ορίζει τη διαδρομή του αρχείου για ανάγνωση των δεδομένων JSSP.
+# Ανάγνωση των δεδομένων ενος JSSP, έστω του la01.
 file_path =  r'D:\1-Dit Uoi\5ο\ΑΛΓΟΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΟΤΗΤΑ\project2\la01.txt'
-# Διαβάζει τα δεδομένα JSSP από το αρχείο και αποθηκεύει τον αριθμό των εργασιών, των μηχανημάτων, τους χρόνους επεξεργασίας και τη σειρά επίσκεψης μηχανημάτων.
 parsed_num_jobs, parsed_num_machines, optimal_makespan, parsed_processing_times, parsed_machine_orders = read_file(file_path)
 # Υπολογίζει το makespan  χρησιμοποιώντας τον αλγόριθμο SPT.
 makespan_spt_user = calculate_makespan_spt(parsed_num_jobs, parsed_num_machines, parsed_processing_times, parsed_machine_orders)
-# Αρχικοποιεί δύο πίνακες για τους χρόνους έναρξης και λήξης κάθε εργασίας σε κάθε μηχάνημα.
+# Αρχικοποίηση δύο πίνακων για τους χρόνους έναρξης και λήξης κάθε εργασίας σε κάθε μηχάνημα.
 start_times = np.zeros((parsed_num_jobs, parsed_num_machines))
 end_times = np.zeros((parsed_num_jobs, parsed_num_machines))
-# Αρχικοποιεί έναν πίνακα για τη διαθεσιμότητα κάθε μηχανήματος.
+# Αρχικοποίηση πίνακα για τη διαθεσιμότητα κάθε μηχανήματος.
 machine_availability = [0] * parsed_num_machines
-# Αρχικοποιεί έναν πίνακα για τον χρόνο ολοκλήρωσης κάθε εργασίας.
+# Αρχικοποίηση πίνακα για τον χρόνο ολοκλήρωσης κάθε εργασίας.
 job_completion_times = [0] * parsed_num_jobs
-# Ταξινομεί τις εργασίες βάσει του συνολικού ελάχιστου χρόνου επεξεργασίας.
+# Ταξινόμηση τών εργασίες βάσει του συνολικού ελάχιστου χρόνου επεξεργασίας.
 sorted_jobs = sorted(range(parsed_num_jobs), key=lambda x: sum(parsed_processing_times[x]))
-# Για κάθε εργασία στην ταξινομημένη λίστα:
+# Υλοποίηση SPT:
 for job in sorted_jobs:
-    # Για κάθε βήμα (μηχάνημα) της εργασίας:
     for step in range(parsed_num_machines):
-        # Εύρεση του αντίστοιχου μηχανήματος για το συγκεκριμένο βήμα.
         machine = parsed_machine_orders[job][step] - 1
-        # Χρόνος επεξεργασίας για το βήμα στο συγκεκριμένο μηχάνημα.
         proc_time = parsed_processing_times[job][step]
-        # Υπολογισμός του χρόνου έναρξης της εργασίας στο μηχάνημα.
         start_time = max(machine_availability[machine], job_completion_times[job])
-        # Υπολογισμός του χρόνου λήξης της εργασίας στο μηχάνημα.
         end_time = start_time + proc_time
-        # Κατγραφή των χρόνων έναρξης και λήξης στους αντίστοιχους πίνακες.
         start_times[job][machine] = start_time
         end_times[job][machine] = end_time
         # Ενημέρωση της διαθεσιμότητας του μηχανήματος και του χρόνου ολοκλήρωσης της εργασίας.
         machine_availability[machine] = end_time
         job_completion_times[job] = end_time
-gantt_chart_path_user_spt = plot_gantt_chart_with_jobs(parsed_num_machines, parsed_num_jobs, start_times, end_times, makespan_spt_user)
+# Κλήση της συνάρτησης για δημιουργία του plot.      
+gantt_chart_path_user_spt = plot_gantt_chart(parsed_num_machines, parsed_num_jobs, start_times, end_times, makespan_spt_user)
